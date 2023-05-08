@@ -1,33 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Link, useLoaderData } from 'react-router-dom'
 import './App.css'
+import CoffeCard from './components/CoffeeCard/CoffeCard';
+import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const loddedCoffees = useLoaderData();
+  const [coffees, setCoffees] = useState(loddedCoffees)
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <nav>
+        <Link className='px-2 text-green-500 font-bold' to="addCoffe">AddCoffe</Link>
+        <Link className='px-2 text-green-500 font-bold' to="/updateCoffe">UpdateCoffe</Link>
+      </nav>
+      <h1 className='text-5xl text-purple-600'>Coffe Store House</h1>
+      <div className='grid grid-cols-2 gap-3 mt-5'>
+        {
+          coffees.map(coffee => <CoffeCard
+            key={coffee._id}
+            coffee={coffee}
+            coffees={coffees}
+            setCoffees={setCoffees}
+          ></CoffeCard>)
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
